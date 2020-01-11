@@ -17,7 +17,7 @@ class Apple:
             self.y = random.randint(0, self.height-1)
             if game[self.x][self.y] == 0:
                 game[self.x][self.y] = 2
-                print("x:%d y:%d" % (self.x, self.y))
+                # print("x:%d y:%d" % (self.x, self.y))
                 break
 
 
@@ -64,6 +64,7 @@ class Snake:
 
         game[x][y] = 1
         self.body.append((x, y))
+        error = None
 
         if self.find_apple(apple) is False:
             tail_x, tail_y = self.body[0]
@@ -71,8 +72,12 @@ class Snake:
             self.body.pop(0)
         else:
             apple.set_x_and_y(game)
-            path_algorithm = DijkstraAlgorithm(self, apple)
+            path_algorithm = AStar(self, apple)
             self.path = path_algorithm.test()
-        self.direction = self.path[-1]
-        if len(self.path) != 1:
-            self.path.pop(-1)
+            error = path_algorithm.error
+
+        if error is None:
+            self.direction = self.path[-1]
+            if len(self.path) != 1:
+                self.path.pop(-1)
+        return error

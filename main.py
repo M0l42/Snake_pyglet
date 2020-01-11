@@ -21,9 +21,6 @@ class GameWindow(pyglet.window.Window):
         path_algo = DijkstraAlgorithm(self.snake, self.apple)
         self.snake.path = path_algo.test()
 
-        self.snake.direction = self.snake.path[-1]
-        self.snake.path.pop(-1)
-
         self.game[self.apple.x][self.apple.y] = 2
 
     def draw_polygon(self):
@@ -57,7 +54,10 @@ class GameWindow(pyglet.window.Window):
             self.snake.direction = 3
 
     def update(self, dt):
-        self.snake.move(self.game, self.apple)
+        error = self.snake.move(self.game, self.apple)
+        if error:
+            print(error)
+            self.close()
 
 
 if __name__ == "__main__":
