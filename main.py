@@ -1,6 +1,7 @@
 import pyglet
 from GameObject import Snake, Apple
 from path_algorithm import DijkstraAlgorithm, AStar
+from threading import Timer
 
 
 class GameWindow(pyglet.window.Window):
@@ -18,8 +19,8 @@ class GameWindow(pyglet.window.Window):
         self.snake = Snake(n, m)
         self.apple = Apple(n, m, self.game)
 
-        path_algo = DijkstraAlgorithm(self.snake, self.apple)
-        self.snake.path = path_algo.test()
+        path_algo = AStar(self.snake, self.apple)
+        self.snake.path = path_algo.algorithm()
 
         self.game[self.apple.x][self.apple.y] = 2
 
@@ -57,7 +58,8 @@ class GameWindow(pyglet.window.Window):
         error = self.snake.move(self.game, self.apple)
         if error:
             print(error)
-            self.close()
+            t = Timer(30, self.close)
+            t.start()
 
 
 if __name__ == "__main__":

@@ -72,8 +72,8 @@ class Snake:
             self.body.pop(0)
         else:
             apple.set_x_and_y(game)
-            path_algorithm = AStar(self, apple)
-            self.path = path_algorithm.test()
+            path_algorithm = DijkstraAlgorithm(self, apple)
+            self.path = path_algorithm.algorithm()
             error = path_algorithm.error
 
         if error is None:
