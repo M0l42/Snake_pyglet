@@ -43,19 +43,19 @@ class Snake:
                 y = 29
             else:
                 y = y-1
-        if self.direction == 2:
+        elif self.direction == 2:
             x, y = self.body[-1]
             if y+1 > 29:
                 y = 0
             else:
                 y = y+1
-        if self.direction == 1:
+        elif self.direction == 1:
             x, y = self.body[-1]
             if x+1 > 29:
                 x = 0
             else:
                 x = x + 1
-        if self.direction == 0:
+        else:
             x, y = self.body[-1]
             if x-1 < 0:
                 x = 29
